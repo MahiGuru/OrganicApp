@@ -52,7 +52,7 @@ const Home: NextPageWithLayout<
     <>
       <Seo title={type?.name} url={type?.slug} images={type?.banners} />
       <Component variables={variables} />
-      {!['compact', 'minimal'].includes(layout) && width > 1023 && (
+      {!['classic', 'minimal'].includes(layout) && width > 1023 && (
         <CartCounterButton />
       )}
     </>

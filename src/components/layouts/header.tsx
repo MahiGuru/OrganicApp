@@ -17,11 +17,16 @@ import Button from '@/components/ui/button';
 import LocationBasedShopForm from '@/components/form/location-based-shop-form';
 import { useSettings } from '@/framework/settings';
 import { ArrowDownIcon } from '@/components/icons/arrow-down';
+import { UserIcon } from '../icons/user-icon';
 
 const Search = dynamic(() => import('@/components/ui/search/search'));
 const AuthorizedMenu = dynamic(() => import('./menu/authorized-menu'), {
   ssr: false,
 });
+const CartCounterIconButton = dynamic(
+  () => import('@/components/cart/cart-counter-icon-button'),
+  { ssr: false }
+);
 const JoinButton = dynamic(() => import('./menu/join-button'), { ssr: false });
 
 const Header = ({ layout }: { layout?: string }) => {
@@ -94,61 +99,15 @@ const Header = ({ layout }: { layout?: string }) => {
               ''
             )}
 
-            <div className="hidden ltr:ml-10 ltr:mr-auto rtl:mr-10 rtl:ml-auto xl:block">
+            {/* <div className="hidden ltr:ml-10 ltr:mr-auto rtl:mr-10 rtl:ml-auto xl:block">
               <GroupsDropdownMenu />
-            </div>
-            {settings?.useGoogleMap && (
-              <div
-                className={cn(
-                  'relative flex w-full justify-center border-t lg:ml-8 lg:w-auto lg:border-none',
-                  isFlattenHeader || (isHomePage && 'lg:hidden 2xl:flex')
-                  // {
-                  //   'lg:hidden xl:flex': !isFlattenHeader,
-                  //   'lg:flex': !isHomePage,
-                  // }
-                )}
-              >
-                <Button
-                  variant="custom"
-                  className="!flex max-w-full items-center gap-2 px-0 text-sm !font-normal before:absolute before:inset-y-0 before:left-0 before:my-auto before:h-8 before:w-[1px] focus:!shadow-none focus:!ring-0 md:text-base lg:pl-5 lg:before:bg-[#E5E7EB]"
-                  onClick={() => setOpenDropdown(!openDropdown)}
-                >
-                  <span className="flex shrink-0 grow-0 basis-auto items-center gap-1 text-base text-accent">
-                    <MapPin className="h-4 w-4 " />
-                    <span>Find Locations :</span>
-                  </span>
-                  {getLocation ? (
-                    <span className="truncate pl-1 text-left leading-normal">
-                      {' '}
-                      {getLocation}
-                    </span>
-                  ) : (
-                    <span className="flex items-center gap-2 pl-1 leading-normal">
-                      {' '}
-                      Enter your address
-                    </span>
-                  )}
-                  <ArrowDownIcon
-                    className={cn(
-                      'mt-1 h-2.5 w-2.5 text-accent transition-all',
-                      openDropdown ? 'rotate-180' : ''
-                    )}
-                  />
-                </Button>
-                <LocationBasedShopForm
-                  className={cn(
-                    'fixed inset-x-0 top-[109px] mx-auto bg-white lg:top-[82px]',
-                    openDropdown === true ? '' : 'hidden'
-                  )}
-                  closeLocation={closeLocation}
-                />
-              </div>
-            )}
+            </div> */}
+            
           </div>
 
           {isHomePage ? (
             <>
-              {(show || layout === 'modern') && (
+              {(show || layout === 'classic') && (
                 <div className="mx-auto hidden w-full overflow-hidden px-10 lg:block xl:w-11/12 2xl:w-10/12">
                   <Search label={t('text-search-label')} variant="minimal" />
                 </div>
@@ -168,9 +127,9 @@ const Header = ({ layout }: { layout?: string }) => {
           Map
         </button> */}
           <ul className="hidden shrink-0 items-center space-x-7 rtl:space-x-reverse lg:flex 2xl:space-x-10">
-            <StaticMenu />
+            {/* <StaticMenu /> */}
             <div className="flex items-center space-x-4 rtl:space-x-reverse">
-              <a
+              {/* <a
                 href={`${process.env.NEXT_PUBLIC_ADMIN_URL}/register`}
                 target="_blank"
                 rel="noreferrer"
@@ -178,7 +137,75 @@ const Header = ({ layout }: { layout?: string }) => {
               >
                 {t('text-become-seller')}
               </a>
-              <li>{isAuthorize ? <AuthorizedMenu /> : <JoinButton />}</li>
+              <li>{isAuthorize ? <AuthorizedMenu /> : <JoinButton />}</li> */}
+              <li>
+                  {settings?.useGoogleMap && (
+                  <div
+                    className={cn(
+                      'relative flex w-full justify-center border-t lg:ml-8 lg:w-auto lg:border-none',
+                      isFlattenHeader || (isHomePage && 'lg:hidden 2xl:flex')
+                      // {
+                      //   'lg:hidden xl:flex': !isFlattenHeader,
+                      //   'lg:flex': !isHomePage,
+                      // }
+                    )}
+                  >
+                    <Button
+                      variant="custom"
+                      className="!flex max-w-full items-center gap-2 px-0 text-sm !font-normal before:absolute before:inset-y-0 before:left-0 before:my-auto before:h-8 before:w-[1px] focus:!shadow-none focus:!ring-0 md:text-base lg:pl-5 lg:before:bg-[#E5E7EB]"
+                      onClick={() => setOpenDropdown(!openDropdown)}
+                    >
+                      <span className="flex shrink-0 grow-0 basis-auto items-center gap-1 text-base text-accent">
+                        <MapPin className="h-4 w-4 " />
+                        <span>Find Locations :</span>
+                      </span>
+                      {getLocation ? (
+                        <span className="truncate pl-1 text-left leading-normal">
+                          {' '}
+                          {getLocation}
+                        </span>
+                      ) : (
+                        <span className="flex items-center gap-2 pl-1 leading-normal">
+                          {' '}
+                          Enter your address
+                        </span>
+                      )}
+                      <ArrowDownIcon
+                        className={cn(
+                          'mt-1 h-2.5 w-2.5 text-accent transition-all',
+                          openDropdown ? 'rotate-180' : ''
+                        )}
+                      />
+                    </Button>
+                    <LocationBasedShopForm
+                      className={cn(
+                        'fixed inset-x-0 top-[109px] mx-auto bg-white lg:top-[82px]',
+                        openDropdown === true ? '' : 'hidden'
+                      )}
+                      closeLocation={closeLocation}
+                    />
+                  </div>
+                )}
+              </li>
+              <li>
+                <CartCounterIconButton />
+              </li>
+              <li>
+                <Button
+                      variant="custom"
+                      className="!flex max-w-full items-center gap-2 px-0 text-sm !font-normal before:absolute before:inset-y-0 before:left-0 before:my-auto before:h-8 before:w-[1px] focus:!shadow-none focus:!ring-0 md:text-base lg:pl-5 lg:before:bg-[#E5E7EB]"
+                      onClick={() => setOpenDropdown(!openDropdown)}
+                    >
+                  <UserIcon />
+                  <ArrowDownIcon
+                    className={cn(
+                      'mt-1 h-2.5 w-2.5 text-accent transition-all',
+                      openDropdown ? 'rotate-180' : ''
+                    )}
+                  />
+                </Button>
+
+              </li>
             </div>
             {isMultilangEnable ? (
               <div className="ms-auto lg:me-5 xl:me-8 2xl:me-10 hidden flex-shrink-0 lg:block">
